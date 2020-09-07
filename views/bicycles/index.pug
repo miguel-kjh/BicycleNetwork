@@ -1,0 +1,27 @@
+extends ../layout
+block content
+    a(href="/bicycles/create") Create
+    table.table
+        thead
+            tr
+                th(scope='col') #
+                th(scope='col') Color
+                th(scope='col') Modelo
+                th(scope='col') Localitation
+                th(scope='col')
+                th(scope='col')
+        tbody
+            each b in bicycles
+                tr
+                    td(scope='row')
+                        = b.code
+                    td= b.color
+                    td= b.model
+                    td= b.localitation
+                    td
+                        a(href='bicycles/' + b.code + '/update') Update
+                    td
+                        form.inLine(method='post' action='bicycles/' + b.code + '/delete')
+                            input(type='hidden' name='code' value=b.code)
+                            button.link-button(type='submit' name='submit_param' value='submit_value' class='btn')
+                                = 'Delete'

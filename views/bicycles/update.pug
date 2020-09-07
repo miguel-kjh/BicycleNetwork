@@ -1,0 +1,32 @@
+extends ../layout
+
+block content
+    a(href='/bicycles') Volver
+
+    br
+    br
+    br
+
+    h1 Modificar Bicicleta
+
+    br
+    br
+
+    form(action=`/bicycles/${bicycle.code}/update` method ='post')
+        lavel(for='code') ID:
+        input#code(type = 'text' name = 'code' value=bicycle.code) 
+        br
+        lavel(for='color') Color:
+        input#color(type = 'text' name = 'color' value=bicycle.color) 
+        br
+        lavel(for='model') Model:
+        input#model(type = 'text' name = 'model' value=bicycle.model) 
+        br
+        lavel(for='lat') Latitude :
+        input#lat(type = 'text' name = 'lat' value=bicycle.localitation[0]) 
+        br
+        lavel(for='lng') Longitude:
+        input#lng(type = 'text' name = 'lng' value=bicycle.localitation[1])  
+        br
+        br
+        input.btn(type='submit' value='OK' class='btn')
