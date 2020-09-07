@@ -6,7 +6,7 @@ let mailConfig;
 if (process.env.NODE_ENV === 'production') {
     const options = {
         auth: {
-            api_key: process.env.SENDGRID_API_KEY
+            api_key: process.env.SENDGRID_API_SECRET
         }
     }
 
@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'production') {
     if (process.env.NODE_ENV === 'staging') {
         const options = {
             auth: {
-                api_key: process.env.SENDGRID_API_KEY
+                api_key: process.env.SENDGRID_API_SECRET
             }
         }
 
