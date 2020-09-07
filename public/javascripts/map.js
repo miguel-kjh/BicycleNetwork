@@ -5,15 +5,20 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 $.ajax({
-    dataType: "json",
-    url: "api/bicycles",
-    success: function (result) { 
-        console.log(result);
-        result.bicycles.forEach(element => {
-            L.marker(
-                element.localitation,
-                {title: element.code}
-                ).addTo(map);
+    method: 'POST',
+    dataType: 'json',
+    url: 'api/auth/authenticate',
+    data: { email: 'dir1ma8209@gmail.com', password: '1234' },
+}).done(function( data ) {
+    $.ajax({
+        dataType: 'json',
+        url: 'api/bicycles',
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("x-access-token", data.data.token);
+        }
+    }).done(function (result) {
+        result.bicycles.forEach(bicycle => {
+            L.marker(bicycle.localitation, { title: bicycle.id }).addTo(map);
         });
-    }
+    });
 });
