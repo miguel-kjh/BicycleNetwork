@@ -1,3 +1,4 @@
+require('dotenv').config();
 let User = require('../../models/user');
 let mongoose = require('mongoose');
 let request = require('request');
@@ -8,7 +9,7 @@ const urlServer = 'http://localhost:3000/api/users'
 describe('test API', () => {
     beforeEach(function (done) {
         mongoose.connection.close().then(() => {
-            let mongoDB = "mongodb+srv://admUser:AvUdCmTBCasY0i0d@cluster0.iy9dp.mongodb.net/BicycleNetworkTest?retryWrites=true&w=majority";
+            let mongoDB = process.env.MONGO_URI;
             mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
     
             let db = mongoose.connection;
@@ -43,7 +44,7 @@ describe('test API', () => {
     describe("POST /create", ()=> {
         it("Status 200", (done)=> {
             let headers = {'content-type': 'application/json'};
-            let user = '{"name":"Mike"}';
+            let user = '{"name":"Mike", "email": "hola@gmail.com", "password":"ikwendew"}';
             request.post({
                 headers: headers,
                 url: urlServer + '/create',
@@ -52,6 +53,8 @@ describe('test API', () => {
                 expect(response.statusCode).toBe(200);
                 let userSaved = JSON.parse(body);
                 expect(userSaved.name).toBe("Mike");
+                expect(userSaved.email).toBe("hola@gmail.com");
+                expect(userSaved.password).not.toBeNull();
                 done();
             });
         });

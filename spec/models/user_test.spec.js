@@ -1,3 +1,4 @@
+require('dotenv').config();
 let mongoose = require('mongoose');
 let User = require('../../models/user');
 let Bicycle = require('../../models/bicycle');
@@ -10,7 +11,7 @@ describe('Testing Usuarios', () => {
     beforeEach( (done) => {
         mongoose.disconnect();
 
-        let mongoDBPath = "mongodb+srv://admUser:AvUdCmTBCasY0i0d@cluster0.iy9dp.mongodb.net/BicycleNetworkTest?retryWrites=true&w=majority";
+        let mongoDBPath = process.env.MONGO_URI;
         mongoose.connect(mongoDBPath, {
             useNewUrlParser: true,
             useUnifiedTopology: true

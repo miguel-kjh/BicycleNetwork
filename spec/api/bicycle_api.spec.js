@@ -1,3 +1,4 @@
+require('dotenv').config();
 let Bicycle = require('../../models/bicycle');
 let mongoose = require('mongoose');
 let request = require('request');
@@ -8,7 +9,7 @@ const urlServer = 'http://localhost:3000/api/bicycles'
 describe('test API', () => {
     beforeEach(function (done) {
         mongoose.connection.close().then(() => {
-            let mongoDB = "mongodb+srv://admUser:AvUdCmTBCasY0i0d@cluster0.iy9dp.mongodb.net/BicycleNetworkTest?retryWrites=true&w=majority";
+            let mongoDB = process.env.MONGO_URI;
             mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
     
             let db = mongoose.connection;

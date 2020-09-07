@@ -1,3 +1,4 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -34,7 +35,7 @@ const token = require('./models/token');
 var mongoose = require('mongoose');
 const { nextTick } = require('process');
 
-var mongoDBPath = "mongodb+srv://admUser:AvUdCmTBCasY0i0d@cluster0.iy9dp.mongodb.net/BicycleNetwork?retryWrites=true&w=majority";
+var mongoDBPath = process.env.MONGO_URI
 mongoose.connect(mongoDBPath, {
   useNewUrlParser: true,
   useUnifiedTopology: true
