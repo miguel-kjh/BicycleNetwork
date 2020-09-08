@@ -61,6 +61,10 @@ app.get('/login', function (req, res) {
   res.render('sessions/login');
 });
 
+app.get('/privacy', function (req, res) {  
+  res.render('privacy_policy');
+});
+
 app.post('/login', function (req, res, next) {  
   passport.authenticate('local', function (err, user, info) {  
     if (err) return next(err);
