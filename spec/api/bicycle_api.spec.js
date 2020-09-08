@@ -9,7 +9,7 @@ const urlServer = 'http://localhost:3000/api/bicycles'
 describe('test API', () => {
     beforeEach(function (done) {
         mongoose.connection.close().then(() => {
-            let mongoDB = process.env.MONGO_URI;
+            let mongoDB = process.env.MONGO_URI_TEST;
             mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
     
             let db = mongoose.connection;
@@ -34,8 +34,8 @@ describe('test API', () => {
         it('Status 200', (done) => {
             request.get(urlServer, function (error, res, body) {  
                 expect(res.statusCode).toBe(200);
-                //let result = JSON.parse(body);
-                //expect(result.bicycles.length).toBe(0);
+                /*let result = JSON.parse(body);
+                expect(result.bicycles.length).toBe(0);*/
                 done();
             });
         });

@@ -11,7 +11,7 @@ describe('Testing Usuarios', () => {
     beforeEach( (done) => {
         mongoose.disconnect();
 
-        let mongoDBPath = process.env.MONGO_URI;
+        let mongoDBPath = process.env.MONGO_URI_TEST;
         mongoose.connect(mongoDBPath, {
             useNewUrlParser: true,
             useUnifiedTopology: true

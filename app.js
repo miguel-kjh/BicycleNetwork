@@ -1,4 +1,5 @@
 require('dotenv').config();
+//require('newrelic');
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -16,9 +17,25 @@ var authRouter = require('./routes/api/auth');
 const passport = require('./config/passport');
 const session = require('express-session');
 const jwt = require('jsonwebtoken');
+const MongoDBStore = require('connect-mongodb-session')(session);
 
 
-const store = new session.MemoryStore;
+let store;
+
+if (process.env.NODE_ENV === 'development') {
+  store = session.MemoryStore();
+
+} else {
+  store = new MongoDBStore({
+    uri: process.env.MONGO_URI,
+    collection: 'sessions'
+  });
+
+  store.on('error', function (err) {
+    assert.ifError(err);
+    assert.ok(false);
+  });
+}
 
 var app = express();
 app.use(session({
@@ -156,6 +173,24 @@ app.use('/bicycles', loggedIn, bicyclesRouter);
 app.use('/api/bicycles', validateUser, bicyclesAPIRouter);
 app.use('/api/users', usersAPIRouter);
 app.use('/api/auth', authRouter);
+
+app.get('/auth/google',
+  passport.authenticate('google', {
+    scope: [
+      'https://www.googleapis.com/auth/plus.login',
+      'https://www.googleapis.com/auth/plus.profile.emails.read',
+      'profile',
+      'email'
+    ] 
+  })
+);
+
+app.get('/auth/google/callback',
+  passport.authenticate('google', {
+    successRedirect: '/',
+    failureRedirect: '/error'
+  })
+);
 
 
 // catch 404 and forward to error handler

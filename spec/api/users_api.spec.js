@@ -9,7 +9,7 @@ const urlServer = 'http://localhost:3000/api/users'
 describe('test API', () => {
     beforeEach(function (done) {
         mongoose.connection.close().then(() => {
-            let mongoDB = process.env.MONGO_URI;
+            let mongoDB = process.env.MONGO_URI_TEST;
             mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
     
             let db = mongoose.connection;

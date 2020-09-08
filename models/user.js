@@ -39,7 +39,9 @@ var userSchema = new Schema({
     verified: {
         type: Boolean,
         default: false
-    }
+    },
+    googleId: String,
+    facebookId: String
 });
 
 userSchema.plugin(uniqueValidator, {message: 'This email {PATH} already exits'});
@@ -116,5 +118,68 @@ userSchema.methods.resetPassword = function(cb) {
         cb(null);
     });
 };
+
+userSchema.statics.findOneOrCreateByFacebook = function findOneOrCreate(condition, callback) {
+    const self = this;
+
+    this.findOne({
+        $or: [
+            { 'facebookId': condition.id },
+            { 'email': condition.emails[0].value }
+        ]
+    }, 
+    (err, result) => {
+        if (result) {
+            callback(err, result);
+        } else {
+            let values = {};
+
+            values.facebookId = condition.id;
+            values.email = condition.emails[0].value;
+            values.name = condition.displayName || '';
+            values.verified = true;
+            values.password = crypto.randomBytes(16).toString('hex');
+
+            self.create(values, function (err, user) {
+                if (err) {
+                    console.log(err);
+                }
+                return callback(err, user);
+            });
+        }
+    });
+}
+
+userSchema.statics.findOneOrCreateByGoogle = function findOneOrCreate(condition, callback) {
+    const self = this;
+
+    this.findOne({
+        $or: [
+            { 'googleId': condition.id },
+            { 'email': condition.emails[0].value }
+        ]
+    }, 
+    (err, result) => {
+        if (result) {
+            callback(err, result);
+        } else {
+            let values = {};
+
+            values.googleId = condition.id;
+            values.email = condition.emails[0].value;
+            values.name = condition.displayName || '';
+            values.verified = true;
+            values.password = crypto.randomBytes(16).toString('hex');
+
+            self.create(values, function (err, user) {
+                if (err) {
+                    console.log(err);
+                }
+
+                return callback(err, user);
+            });
+        }
+    });
+}
 
 module.exports = mongoose.model('User', userSchema);
