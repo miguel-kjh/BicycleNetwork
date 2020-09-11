@@ -5,7 +5,7 @@ let Bicycle = require('../../models/bicycle');
 let Booking = require('../../models/booking');
 
 
-describe('Testing Usuarios', () => {
+describe('Users Testing', () => {
     beforeAll((done) => { mongoose.connection.close(done) });
 
     beforeEach( (done) => {
@@ -45,8 +45,8 @@ describe('Testing Usuarios', () => {
         });
     });
 
-    describe('Cuando un Usuario reserva una Bici', () => {
-        it('Debe existir la reserva', (done) => {
+    describe('When a User reserves a bicycle', () => {
+        it('There must be a reservation', (done) => {
             const user = new User({ 
                 name: 'Julian',
                 email: 'mg@gmail.com',

@@ -104,15 +104,15 @@ userSchema.methods.resetPassword = function(cb) {
         if (err) { return cb(err); }
 
         const mailOptions = {
-            from: 'no-reply@redbicicletas.com',
+            from: 'no-reply@BicycleNetwork.com',
             to: email_destination,
-            subject: 'Reseteo de password',
-            text: 'Hola,\n\n' + 'Por favor, para resetear el password de su cuenta haga click en este link:\n' + 'http://localhost:3000' + '\/resetPassword\/' + token.token + '\n'
+            subject: 'Password reset',
+            text: 'Hi,\n\n' + 'Please click on this link to reset your account password:\n' + 'http://localhost:3000' + '\/resetPassword\/' + token.token + '\n'
         };
 
         mailer.sendMail(mailOptions, function(err) {
             if (err) { return cb(err); }
-            console.log('Se envio un email para resetear el password a: ' + email_destination + '.');
+            console.log('An email to reset the password was sent to' + email_destination + '.');
         });
 
         cb(null);
