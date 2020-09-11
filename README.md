@@ -4,11 +4,12 @@ This repo is the project of the coursera course "Server side development: NodeJS
 
 ## Used technologies
 
-- NodeJs
+- NodeJs/Express
 - JavaScript
 - Jasmine
 - npm
 - Heroku
 - MongoDB and Mongo Atlas
-- Google Auth
-- FaceBook Auth
+- Google OAuth
+- Facebook OAuth
+- NewRelic
